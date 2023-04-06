@@ -8,26 +8,49 @@ use App\Models\Pelanggan;
 class PelangganController extends Controller
 {
     public function index(){
-        return Pelanggan::all();      
+        $data = Pelanggan::all();
+        
+        if($data){
+            return response()->json(["Message" => 'success', "data" => $data]);
+        } else {
+            return response()->json(["Message" => 'gagal']);
+        }
+        
     }
 
     public function create(Request $request){
-        return Pelanggan::create([
+        $data = Pelanggan::create([
             'nama' => $request->nama,
             'domisili' => $request->domisili,
             'jenis_kelamin' => $request->jenis_kelamin
         ]);
+
+        if($data){
+            return response()->json(["Message" => 'success', "data" => $data]);
+        } else {
+            return response()->json(["Message" => 'gagal']);
+        }
     }
 
     public function update(Request $request){
-        return Pelanggan::where('id_pelanggan', $request->id_pelanggan)->update([
+        $data = Pelanggan::where('id_pelanggan', $request->id_pelanggan)->update([
             'nama' => $request->nama,
             'domisili' => $request->domisili,
             'jenis_kelamin' => $request->jenis_kelamin
         ]);
+        if ($data > 0) {
+            return response()->json(["Message" => 'success', "Detail" => 'Data pelanggan berhasil didelete']);
+        } else {
+            return response()->json(["Message" => 'gagal', "Detail" => 'Data pelanggan gagal didelete']);
+        }
     }
 
     public function delete(Request $request){
-        return Pelanggan::where('id_pelanggan', $request->id_pelanggan)->delete();
+        $data = Pelanggan::where('id_pelanggan', $request->id_pelanggan)->delete();
+        if ($data > 0) {
+            return response()->json(["Message" => 'success', "Detail" => 'Data pelanggan berhasil didelete']);
+        } else {
+            return response()->json(["Message" => 'gagal', "Detail" => 'Data pelanggan gagal didelete']);
+        }
     }
 }
