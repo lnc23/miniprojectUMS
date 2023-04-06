@@ -9,7 +9,7 @@ class PelangganController extends Controller
 {
     public function index(){
         $data = Pelanggan::all();
-        
+
         if($data){
             return response()->json(["Message" => 'success', "data" => $data]);
         } else {
@@ -20,9 +20,9 @@ class PelangganController extends Controller
 
     public function create(Request $request){
         $data = Pelanggan::create([
-            'nama' => $request->nama,
-            'domisili' => $request->domisili,
-            'jenis_kelamin' => $request->jenis_kelamin
+            'nama' => $request->json('nama'),
+            'domisili' => $request->json('domisili'),
+            'jenis_kelamin' => $request->json('jenis_kelamin')
         ]);
 
         if($data){
@@ -34,21 +34,21 @@ class PelangganController extends Controller
 
     public function update(Request $request){
         $data = Pelanggan::where('id_pelanggan', $request->id_pelanggan)->update([
-            'nama' => $request->nama,
-            'domisili' => $request->domisili,
-            'jenis_kelamin' => $request->jenis_kelamin
+            'nama' => $request->json('nama'),
+            'domisili' => $request->json('domisili'),
+            'jenis_kelamin' => $request->json('jenis_kelamin')
         ]);
         if ($data > 0) {
-            return response()->json(["Message" => 'success', "Detail" => 'Data pelanggan berhasil didelete']);
+            return response()->json(["Message" => 'success', "Detail" => "Data pelanggan $request->id_pelanggan berhasil diupdate"]);
         } else {
-            return response()->json(["Message" => 'gagal', "Detail" => 'Data pelanggan gagal didelete']);
+            return response()->json(["Message" => 'gagal', "Detail" => 'Data pelanggan gagal diupdate']);
         }
     }
 
     public function delete(Request $request){
         $data = Pelanggan::where('id_pelanggan', $request->id_pelanggan)->delete();
         if ($data > 0) {
-            return response()->json(["Message" => 'success', "Detail" => 'Data pelanggan berhasil didelete']);
+            return response()->json(["Message" => 'success', "Detail" => "Data pelanggan $request->id_pelanggan berhasil didelete"]);
         } else {
             return response()->json(["Message" => 'gagal', "Detail" => 'Data pelanggan gagal didelete']);
         }
