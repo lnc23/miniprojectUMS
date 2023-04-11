@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Controllers\PenjualanController;
+use App\Models\Penjualan;
 
 
 class Item_penjualan extends Model
@@ -14,5 +14,15 @@ class Item_penjualan extends Model
     protected $fillable = [
         'nota', 'kode_barang', 'qty'
     ];
+
+    /**
+     * Get the user that owns the Item_penjualan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function penjualan()
+    {
+        return $this->belongsTo(Penjualan::class);
+    }
 
 }

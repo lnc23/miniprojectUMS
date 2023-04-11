@@ -5,7 +5,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Controllers\ItemPenjualanController;
+use App\Models\Item_penjualan;
+
 
 class Penjualan extends Model
 {
@@ -14,4 +15,11 @@ class Penjualan extends Model
     protected $fillable = [
         'tgl', 'kode_pelanggan', 'subtotal'
     ];
+
+    public function itemPenjualan()
+    {
+        return $this->hasMany(Item_penjualan::class, 'nota', 'id_nota');
+    }
+
+    
 }

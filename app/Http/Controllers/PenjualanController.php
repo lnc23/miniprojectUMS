@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\DB;
 class PenjualanController extends Controller
 {
     public function index(){
-        return Penjualan::all();
+    $penjualans = Penjualan::with('itemPenjualan')->get();
+    return $penjualans;
     }
 
     public function create(Request $request)
@@ -38,7 +39,7 @@ class PenjualanController extends Controller
             DB::commit();
     
             return response()->json([
-                'message' => 'Penjualan Berhasil Tersinmpan',
+                'message' => 'Penjualan Berhasil Tersimpan',
             ], 200);
         } catch (\Exception $e) {
             DB::rollback();
@@ -46,6 +47,40 @@ class PenjualanController extends Controller
             return response()->json([
                 'message' => 'gagal tersimpan',
             ], 500);
+        }
+    }
+
+    public function update(Request $request){
+        {
+            try {
+                DB::beginTransaction();
+        
+                $penjualanTable = Penjualan::where('id_nota', $request->id_nota)->update([
+                    "tgl" => $request->json('tgl'),
+                    "kode_pelanggan" => $request->json('kode_pelanggan'),
+                    "subtotal" => $request->json('subtotal'),
+                ]);
+
+                foreach ($request->json('items') as $item) {
+                    $data2 = array(
+                        "kode_barang" => $item['kode_barang'],
+                        "qty" => $item['qty'],
+                    );
+                    Item_penjualan::where('nota', $request->id_nota)->update($data2);
+                }
+        
+                DB::commit();
+        
+                return response()->json([
+                    'message' => 'Penjualan Berhasil Diupdate',
+                ], 200);
+            } catch (\Exception $e) {
+                DB::rollback();
+        
+                return response()->json([
+                    'message' => 'gagal diupdate',
+                ], 500);
+            }
         }
     }
 }

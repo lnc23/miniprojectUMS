@@ -19,6 +19,8 @@ Route::post('penjualan', [PenjualanController::class, 'create']);
 
 Route::put('pelanggan', [PelangganController::class, 'update']);
 Route::put('barang', [BarangController::class, 'update']);
+Route::put('/penjualan', [PenjualanController::class, 'update']);
+
 
 
 Route::delete('pelanggan', [PelangganController::class, 'delete']);
