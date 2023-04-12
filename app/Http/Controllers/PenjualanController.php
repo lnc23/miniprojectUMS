@@ -66,7 +66,7 @@ class PenjualanController extends Controller
                         "kode_barang" => $item['kode_barang'],
                         "qty" => $item['qty'],
                     );
-                    Item_penjualan::where('nota', $request->id_nota)->update($data2);
+                    Item_penjualan::where('id_item', $item['id_item'])->where('nota', $request->id_nota)->update($data2);
                 }
         
                 DB::commit();
@@ -78,9 +78,21 @@ class PenjualanController extends Controller
                 DB::rollback();
         
                 return response()->json([
-                    'message' => 'gagal diupdate',
+                    'message' => "gagal update",
                 ], 500);
             }
+        }
+    }
+    
+    public function delete(Request $request){
+        $itemPenjualan = Item_penjualan::where('nota', $request->id_nota)->delete();
+        if($itemPenjualan > 0){
+            $penjualan = Penjualan::where('id_nota', $request->id_nota)->delete();
+        }
+        if ($penjualan > 0 && $itemPenjualan > 0) {
+            return response()->json(["Message" => 'success', "Detail" => "Data penjualan $request->id_nota berhasil didelete"]);
+        } else {
+            return response()->json(["Message" => 'gagal', "Detail" => 'Data penjualan gagal didelete']);
         }
     }
 }

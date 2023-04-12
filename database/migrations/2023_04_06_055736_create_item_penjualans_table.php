@@ -14,6 +14,7 @@ class CreateItemPenjualansTable extends Migration
     public function up()
     {
         Schema::create('item_penjualans', function (Blueprint $table) {
+            $table->bigIncrements('id_item');
             $table->unsignedBigInteger('nota');
             $table->foreign('nota')->references('id_nota')->on('penjualans');
             $table->unsignedBigInteger('kode_barang');

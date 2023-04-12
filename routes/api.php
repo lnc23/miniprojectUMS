@@ -21,10 +21,9 @@ Route::put('pelanggan', [PelangganController::class, 'update']);
 Route::put('barang', [BarangController::class, 'update']);
 Route::put('/penjualan', [PenjualanController::class, 'update']);
 
-
-
 Route::delete('pelanggan', [PelangganController::class, 'delete']);
 Route::delete('barang', [BarangController::class, 'delete']);
+Route::delete('/penjualan', [PenjualanController::class, 'delete']);
 
 
 
