@@ -17,6 +17,7 @@ class CreateBarangsTable extends Migration
             $table->bigIncrements('kode');
             $table->string('nama');
             $table->string('kategori');
+            $table->string('warna');
             $table->integer('harga');
             $table->timestamps();
         });

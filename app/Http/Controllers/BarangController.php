@@ -15,7 +15,8 @@ class BarangController extends Controller
         $data = Barang::create([
             'nama' => $request->json('nama'),
             'kategori' => $request->json('kategori'),
-            'harga' => $request->json('harga')
+            'harga' => $request->json('harga'),
+            'warna' => $request->json('warna')
         ]);
         
         if($data){
@@ -29,7 +30,8 @@ class BarangController extends Controller
         $data = Barang::where('kode', $request->kode)->update([
             'nama' => $request->json('nama'),
             'kategori' => $request->json('kategori'),
-            'harga' => $request->json('harga')
+            'harga' => $request->json('harga'),
+            'warna' => $request->json('warna')
         ]);
 
         if($data > 0){
